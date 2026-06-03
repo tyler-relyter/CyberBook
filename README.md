@@ -54,7 +54,6 @@ This is intentionally a **PowerShell-native** tool — no SCAP, SCC, or Nessus r
 ```
 CyberBook/
 ├── README.md
-├── SKILL.md                          # Claude agent skill definition
 │
 └── scripts/
     ├── Invoke-STIGAssessment.ps1     # Main orchestrator — loads modules, writes reports
