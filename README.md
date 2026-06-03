@@ -1,6 +1,6 @@
 # CyberBook — Windows 11 STIG Automated Assessment Tool
 
-Automated DISA STIG compliance scanner for Windows 11. Runs PowerShell-based checks against the **WN11 V1R4** benchmark, maps every finding to a STIG control ID, assigns a CAT I/II/III severity rating, and produces JSON, CSV, and HTML reports.
+Automated DISA STIG compliance scanner for Windows 11. Runs PowerShell-based checks against the **WN11 V2R8** benchmark, maps every finding to a STIG control ID, assigns a CAT I/II/III severity rating, and produces JSON, CSV, and HTML reports.
 
 ---
 
