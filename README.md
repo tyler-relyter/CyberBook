@@ -63,7 +63,7 @@ CyberBook/
     ├── reports/                      # Created automatically on first run
     │   ├── STIG_Report_<HOST>_<TS>.json
     │   ├── STIG_Report_<HOST>_<TS>.csv
-    │   └── STIG_Report_<HOST>_<TS>_report.html
+    │   └── STIG_Report_<HOST>_<TS>_report.html       #TODO
     │
     └── modules/
         ├── Check-General.ps1         # WN11-00-* : BitLocker, NTFS, optional features, SMBv1
