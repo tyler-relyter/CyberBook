@@ -113,6 +113,14 @@ $summary = [ordered]@{
     compliance_pct   = if ($total -gt 0) { [math]::Round(($passed / $total) * 100, 1) } else { 0 }
 }
 
+# Resolve script directory reliably — $PSScriptRoot is empty when called via
+# batch file with a relative path, so fall back to MyInvocation.
+$scriptDir = if ($PSScriptRoot) { $PSScriptRoot } `
+             else { Split-Path -Parent $MyInvocation.MyCommand.Path }
+
+# Always define $jsonPath so the HTML block can reference it safely
+$jsonPath = $null
+
 # Output: JSON
 if ($Format -in "JSON","Both") {
     $jsonOutput = [ordered]@{
@@ -132,6 +140,21 @@ if ($Format -in "CSV","Both") {
     $findings | Select-Object stig_id,title,severity,description,check,fix,pass_criteria,status,evidence |
         Export-Csv -Path $csvPath -NoTypeInformation -Encoding UTF8
     Write-Host "[+] CSV  report written: $csvPath" -ForegroundColor Green
+}
+
+# Output: HTML (auto-generated from the JSON written above)
+if ($null -ne $jsonPath -and (Test-Path $jsonPath)) {
+    $reportScript = Join-Path $scriptDir "New-STIGReport.ps1"
+    if (Test-Path $reportScript) {
+        Write-Host "[*] Generating HTML report..." -ForegroundColor Yellow
+        try {
+            & $reportScript -JsonPath $jsonPath -OutputPath $OutputPath
+        } catch {
+            Write-Warning "[!] HTML report generation failed: $_"
+        }
+    } else {
+        Write-Warning "[!] New-STIGReport.ps1 not found at: $reportScript"
+    }
 }
 
 # Console Summary

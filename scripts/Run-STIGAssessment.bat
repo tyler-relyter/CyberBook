@@ -83,8 +83,14 @@ if %PS_EXIT% equ 0 (
     echo [SUCCESS] Assessment completed. Reports saved to:
     echo           %REPORT_DIR%
     echo.
-    echo Opening report directory...
+    echo Opening HTML report...
+    for /f "delims=" %%F in ('dir /b /o-d "%REPORT_DIR%\*_report.html" 2^>nul') do (
+        start "" "%REPORT_DIR%\%%F"
+        goto :opened
+    )
+    echo [INFO] No HTML report found, opening report folder instead.
     explorer "%REPORT_DIR%"
+    :opened
 ) else (
     echo [ERROR] Assessment exited with code %PS_EXIT%.
     echo         Check PowerShell output above for details.
